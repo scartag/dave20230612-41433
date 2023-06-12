@@ -1,3 +1,4 @@
+import { Pressable } from "react-native";
 import React from "react";
 import { View, Text, Image, TouchableOpacity, StyleSheet, ScrollView } from "react-native";
 
@@ -17,9 +18,9 @@ const RobotPetDetails = ({
   return <View style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.navigate("Pet Gallery")} style={styles.closeButton}>
-          <Image source={{
-          uri: "https://tinyurl.com/42evm3m3"
-        }} style={styles.closeButtonImage} />
+          <Pressable onPress={() => {
+          navigation.navigate("Untitled1");
+        }}><Image source={require("./back.png")} style={styles.closeButtonImage} /></Pressable>
         </TouchableOpacity>
         <Text style={styles.headerTitle}>{pet.name}</Text>
       </View>

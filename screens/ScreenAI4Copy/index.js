@@ -6,7 +6,7 @@ const UserProfile = ({
 }) => {
   return <View style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.navigate("Untitled1")}>
+        <TouchableOpacity onPress={() => navigation.navigate("ScreenAI4")}>
           <Text style={styles.backButton}>Back</Text>
         </TouchableOpacity>
         <Text style={styles.headerText}>User Profile</Text>
