@@ -25,14 +25,10 @@ const RobotPetDetails = ({
         <Text style={styles.headerTitle}>{pet.name}</Text>
       </View>
       <ScrollView style={styles.body}>
-        <Image source={{
-        uri: pet.image_url
-      }} style={styles.petImage} />
+        <Image source={require("./pet4.png")} style={styles.petImage} />
         <View style={styles.petNameFav}>
           <Text style={styles.petName}>{pet.name}</Text>
-          {pet.is_favorite && <Image source={{
-          uri: "https://tinyurl.com/42evm3m3"
-        }} style={styles.favIcon} />}
+          {pet.is_favorite && <Image source={require("./fav.png")} style={styles.favIcon} />}
         </View>
         <View style={styles.petDetails}>
           <Text style={styles.label}>Pet Name:</Text>
