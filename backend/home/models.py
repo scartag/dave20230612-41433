@@ -9,3 +9,4 @@ class Pet(models.Model):
     is_favorite = models.BooleanField()
     description = models.TextField()
     date_adopted = models.DateTimeField(auto_now_add=True,)
+    user = models.ForeignKey("users.User",on_delete=models.CASCADE,null=True,blank=True,related_name="pet_user",)
