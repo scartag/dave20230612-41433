@@ -3,6 +3,12 @@ const daveAPI = axios.create({
   baseURL: "https://dave20230612-41433.botics.co",
   headers: { Accept: "application/json", "Content-Type": "application/json" }
 })
+function api_v1_pet_list(payload) {
+  return daveAPI.get(`/api/v1/pet/`)
+}
+function api_v1_pet_create(payload) {
+  return daveAPI.post(`/api/v1/pet/`, payload.data)
+}
 function api_v1_login_create(payload) {
   return daveAPI.post(`/api/v1/login/`, payload.data)
 }
@@ -20,6 +26,18 @@ function rest_auth_user_partial_update(payload) {
 }
 function api_docs_schema_retrieve(payload) {
   return daveAPI.get(`/api-docs/schema/`, { params: { lang: payload.lang } })
+}
+function api_v1_pet_retrieve(payload) {
+  return daveAPI.get(`/api/v1/pet/${payload.id}/`)
+}
+function api_v1_pet_update(payload) {
+  return daveAPI.put(`/api/v1/pet/${payload.id}/`, payload.data)
+}
+function api_v1_pet_partial_update(payload) {
+  return daveAPI.patch(`/api/v1/pet/${payload.id}/`, payload.data)
+}
+function api_v1_pet_destroy(payload) {
+  return daveAPI.delete(`/api/v1/pet/${payload.id}/`)
 }
 function rest_auth_login_create(payload) {
   return daveAPI.post(`/rest-auth/login/`, payload.data)
@@ -46,12 +64,18 @@ function rest_auth_registration_verify_email_create(payload) {
   return daveAPI.post(`/rest-auth/registration/verify-email/`, payload.data)
 }
 export const apiService = {
+  api_v1_pet_list,
+  api_v1_pet_create,
   api_v1_login_create,
   api_v1_signup_create,
   rest_auth_user_retrieve,
   rest_auth_user_update,
   rest_auth_user_partial_update,
   api_docs_schema_retrieve,
+  api_v1_pet_retrieve,
+  api_v1_pet_update,
+  api_v1_pet_partial_update,
+  api_v1_pet_destroy,
   rest_auth_login_create,
   rest_auth_logout_retrieve,
   rest_auth_logout_create,
