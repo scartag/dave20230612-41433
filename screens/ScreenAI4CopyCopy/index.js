@@ -1,49 +1,38 @@
 import React from "react";
-import { useSelector } from "react-redux";
-import { useNavigation, useRoute } from "@react-navigation/native";
 import { SafeAreaView, Pressable } from "react-native";
-import { useState, useEffect } from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, Alert } from "react-native";
-import { useDispatch } from "react-redux";
-import { api_v1_pet_list } from "../../store/petboticsAPI/pets.slice.js";
-import { unwrapResult } from "@reduxjs/toolkit";
+import { useState } from "react";
+import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from "react-native";
+const dummyData = [{
+  id: 1,
+  name: "Pet 1",
+  isfavorite: false
+}, {
+  id: 2,
+  name: "Pet 2",
+  isfavorite: true
+}, {
+  id: 3,
+  name: "Pet 3",
+  isfavorite: false
+}, {
+  id: 4,
+  name: "Pet 4",
+  isfavorite: true
+}];
 
 const PetGalleryScreen = () => {
-  const {
-    api,
-    entities: storePets
-  } = useSelector(state => state?.Pets);
-  console.log(storePets);
-  const {
-    entities: authUser
-  } = useSelector(state => state?.AuthTokens);
-  const [pets, setPets] = useState(storePets);
-  const dispatch = useDispatch();
-  const route = useRoute();
-  const navigation = useNavigation();
+  const [pets, setPets] = useState(dummyData);
   const [filter, setFilter] = useState("Explore");
-  useEffect(() => {
-    // if user is authenticated, fetch pets
-    if ((authUser || route.params.token) && !pets.length) {
-      // check user info
-      console.log(authUser);
-      dispatch(api_v1_pet_list()).then(response => {
-        const result = unwrapResult(response);
-        setPets(result);
-      }).catch(error => Alert.alert(error.message));
-    } else {// logoff, navigate to the login screen?
-    }
-  }, [authUser, route?.params?.token]);
 
   const handleFilter = filterType => {
     setFilter(filterType);
 
     if (filterType === "Explore") {
-      setPets(storePets);
+      setPets(dummyData);
     } else if (filterType === "My Pets") {
-      setPets(storePets.filter(pet => !pet.isfavorite));
+      setPets(dummyData.filter(pet => !pet.isfavorite));
     } else if (filterType === "My Favs") {
-      setPets(storePets.filter(pet => pet.isfavorite));
+      setPets(dummyData.filter(pet => pet.isfavorite));
     }
   };
 
@@ -63,28 +52,17 @@ const PetGalleryScreen = () => {
   return <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
         <View style={styles.header}>
-          <Pressable onPress={() => {
-          navigation.navigate("ScreenAI7", {});
-        }}>
+          <Pressable>
             <Image source={require("./peticon.png")} style={styles.headerImage} />
           </Pressable>
           <Text style={styles.headerTitle}>{"Explore"}</Text>
-          <Pressable onPress={() => {
-          navigation.navigate("ScreenAI3", {
-            token: route?.params?.token
-          });
-        }}>
+          <Pressable>
             <Image source={require("./add.png")} style={styles.headerImage} />
           </Pressable>
         </View>
         <View style={styles.body}>
-          {api?.loading === "pending" && <Text>Loading...</Text>}
           <ScrollView contentContainerStyle={styles.cardContainer}>
-            {pets.map(pet => <Pressable key={pet.id} style={styles.card} onPress={() => {
-            navigation.navigate("ScreenAI5", {
-              petId: pet.id
-            });
-          }}>
+            {pets.map(pet => <Pressable key={pet.id} style={styles.card}>
                 <Image source={require("./pet4.png")} style={styles.cardImage} />
                 <View style={styles.cardTextContainer}>
                   <Text style={styles.cardName}>{pet.name}</Text>
