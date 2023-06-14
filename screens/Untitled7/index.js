@@ -1,4 +1,5 @@
-import { api_v1_pet_retrieve } from "../../store/daveAPI/pets.slice.js";
+import { useSelector } from "react-redux";
+import { api_v1_pet_retrieve } from "../../store/daveAPI/pets.slice";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Pressable } from "react-native";
@@ -6,25 +7,17 @@ import React from "react";
 import { View, Text, Image, StyleSheet, ScrollView } from "react-native";
 
 const RobotPetDetails = ({
-  navigation
+  navigation,
+  route
 }) => {
   const dispatch = useDispatch();
+  const petId = route.params.petId;
+  const pet = useSelector(state => state?.pets?.api || {});
   useEffect(() => {
     dispatch(api_v1_pet_retrieve({
-      id: pet.id
+      id: petId
     }));
   }, []);
-  const pet = {
-    id: 0,
-    name: "RoboPet",
-    type: "Robot Dog",
-    image_url: "https://tinyurl.com/42evm3m3",
-    attributes: "Friendly, Playful, Loyal",
-    is_favorite: true,
-    description: "A cute and friendly robot dog that loves to play and keep you company.",
-    date_adopted: "2022-01-01",
-    user: "John Doe"
-  };
   return <View style={styles.container}>
       <View style={styles.header}>
         <Pressable onPress={() => {
@@ -35,7 +28,9 @@ const RobotPetDetails = ({
         <Text style={styles.headerTitle}>{pet.name}</Text>
       </View>
       <ScrollView style={styles.body}>
-        <Image source={require("./pet4.png")} style={styles.petImage} />
+        <Image source={{
+        uri: pet.image_url
+      }} style={styles.petImage} />
         <View style={styles.petNameFav}>
           <Text style={styles.petName}>{pet.name}</Text>
           {pet.is_favorite && <Image source={require("./icone-de-coeur-bleu-1.png")} style={styles.favIcon} />}
