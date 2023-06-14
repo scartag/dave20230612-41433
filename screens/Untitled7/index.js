@@ -12,7 +12,7 @@ const RobotPetDetails = ({
 }) => {
   const dispatch = useDispatch();
   const petId = route?.params?.petId || 1;
-  const pet = useSelector(state => state?.pets?.api) || {};
+  const pet = useSelector(state => state?.Pets?.entity) || {};
   useEffect(() => {
     dispatch(api_v1_pet_retrieve({
       id: petId
