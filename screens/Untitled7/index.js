@@ -17,7 +17,7 @@ const RobotPetDetails = ({
     dispatch(api_v1_pet_retrieve({
       id: petId
     }));
-  }, []);
+  }, [petId]);
   return <View style={styles.container}>
       <View style={styles.header}>
         <Pressable onPress={() => {
