@@ -1,11 +1,21 @@
+import { api_v1_pet_retrieve } from "../../store/daveAPI/pets.slice.js";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { Pressable } from "react-native";
 import React from "react";
-import { View, Text, Image, TouchableOpacity, StyleSheet, ScrollView } from "react-native";
+import { View, Text, Image, StyleSheet, ScrollView } from "react-native";
 
 const RobotPetDetails = ({
   navigation
 }) => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(api_v1_pet_retrieve({
+      id: pet.id
+    }));
+  }, []);
   const pet = {
+    id: 0,
     name: "RoboPet",
     type: "Robot Dog",
     image_url: "https://tinyurl.com/42evm3m3",
@@ -17,18 +27,18 @@ const RobotPetDetails = ({
   };
   return <View style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.navigate("Pet Gallery")} style={styles.closeButton}>
-          <Pressable onPress={() => {
-          navigation.navigate("Untitled1");
-        }}><Image source={require("./back.png")} style={styles.closeButtonImage} /></Pressable>
-        </TouchableOpacity>
+        <Pressable onPress={() => {
+        navigation.navigate(" Screen + AI4CopyCopy");
+      }} style={styles.closeButton}>
+          <Image source={require("./back.png")} style={styles.closeButtonImage} />
+        </Pressable>
         <Text style={styles.headerTitle}>{pet.name}</Text>
       </View>
       <ScrollView style={styles.body}>
         <Image source={require("./pet4.png")} style={styles.petImage} />
         <View style={styles.petNameFav}>
           <Text style={styles.petName}>{pet.name}</Text>
-          {pet.is_favorite && <Image source={require("./fav.png")} style={styles.favIcon} />}
+          {pet.is_favorite && <Image source={require("./icone-de-coeur-bleu-1.png")} style={styles.favIcon} />}
         </View>
         <View style={styles.petDetails}>
           <Text style={styles.label}>Pet Name:</Text>
@@ -76,7 +86,8 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     color: "#376D89",
-    fontSize: 24
+    fontSize: 24,
+    fontWeight: "700"
   },
   body: {
     paddingHorizontal: 10
