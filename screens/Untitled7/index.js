@@ -11,8 +11,8 @@ const RobotPetDetails = ({
   route
 }) => {
   const dispatch = useDispatch();
-  const petId = route.params.petId;
-  const pet = useSelector(state => state?.pets?.api || {});
+  const petId = route?.params?.petId || 1;
+  const pet = useSelector(state => state?.pets?.api);
   useEffect(() => {
     dispatch(api_v1_pet_retrieve({
       id: petId
