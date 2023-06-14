@@ -5,19 +5,43 @@ import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from "rea
 const dummyData = [{
   id: 1,
   name: "Pet 1",
-  isfavorite: false
+  type: "Dog",
+  image_url: "./pet1.png",
+  attributes: ["Friendly", "Playful"],
+  is_favorite: false,
+  description: "A cute and friendly dog.",
+  date_adopted: "2021-01-01",
+  user: "User1"
 }, {
   id: 2,
   name: "Pet 2",
-  isfavorite: true
+  type: "Cat",
+  image_url: "./pet2.png",
+  attributes: ["Independent", "Calm"],
+  is_favorite: true,
+  description: "A calm and independent cat.",
+  date_adopted: "2021-02-01",
+  user: "User2"
 }, {
   id: 3,
   name: "Pet 3",
-  isfavorite: false
+  type: "Dog",
+  image_url: "./pet3.png",
+  attributes: ["Energetic", "Loyal"],
+  is_favorite: false,
+  description: "An energetic and loyal dog.",
+  date_adopted: "2021-03-01",
+  user: "User3"
 }, {
   id: 4,
   name: "Pet 4",
-  isfavorite: true
+  type: "Cat",
+  image_url: "./pet4.png",
+  attributes: ["Affectionate", "Quiet"],
+  is_favorite: true,
+  description: "An affectionate and quiet cat.",
+  date_adopted: "2021-04-01",
+  user: "User4"
 }];
 
 const PetGalleryScreen = () => {
@@ -30,9 +54,9 @@ const PetGalleryScreen = () => {
     if (filterType === "Explore") {
       setPets(dummyData);
     } else if (filterType === "My Pets") {
-      setPets(dummyData.filter(pet => !pet.isfavorite));
+      setPets(dummyData.filter(pet => !pet.is_favorite));
     } else if (filterType === "My Favs") {
-      setPets(dummyData.filter(pet => pet.isfavorite));
+      setPets(dummyData.filter(pet => pet.is_favorite));
     }
   };
 
@@ -40,7 +64,7 @@ const PetGalleryScreen = () => {
     const updatedPets = pets.map(pet => {
       if (pet.id === id) {
         return { ...pet,
-          isFav: !pet.isfavorite
+          is_favorite: !pet.is_favorite
         };
       }
 
@@ -63,12 +87,12 @@ const PetGalleryScreen = () => {
         <View style={styles.body}>
           <ScrollView contentContainerStyle={styles.cardContainer}>
             {pets.map(pet => <Pressable key={pet.id} style={styles.card}>
-                <Image source={require("./pet4.png")} style={styles.cardImage} />
+                <Image source={require(pet.image_url)} style={styles.cardImage} />
                 <View style={styles.cardTextContainer}>
                   <Text style={styles.cardName}>{pet.name}</Text>
                   <TouchableOpacity onPress={() => handleFavToggle(pet.id)}>
                     <Image source={{
-                  uri: pet.isfavorite ? "https://drive.google.com/uc?export=view&id=1tVMtgpqVRu-qrFqEN2u04o_gOPG0vFDQ" : "https://drive.google.com/uc?export=view&id=1pIgKHT8aLxInLdY_XuLrq8P-vzkFizkX"
+                  uri: pet.is_favorite ? "https://drive.google.com/uc?export=view&id=1tVMtgpqVRu-qrFqEN2u04o_gOPG0vFDQ" : "https://drive.google.com/uc?export=view&id=1pIgKHT8aLxInLdY_XuLrq8P-vzkFizkX"
                 }} style={styles.cardFavImage} />
                   </TouchableOpacity>
                 </View>
