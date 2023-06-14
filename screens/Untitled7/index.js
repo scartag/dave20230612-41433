@@ -12,7 +12,7 @@ const RobotPetDetails = ({
 }) => {
   const dispatch = useDispatch();
   const petId = route?.params?.petId || 1;
-  const pet = useSelector(state => state?.pets?.api);
+  const pet = useSelector(state => state?.pets?.api) || {};
   useEffect(() => {
     dispatch(api_v1_pet_retrieve({
       id: petId
@@ -25,35 +25,35 @@ const RobotPetDetails = ({
       }} style={styles.closeButton}>
           <Image source={require("./back.png")} style={styles.closeButtonImage} />
         </Pressable>
-        <Text style={styles.headerTitle}>{pet.name}</Text>
+        <Text style={styles.headerTitle}>{pet?.name || ""}</Text>
       </View>
       <ScrollView style={styles.body}>
         <Image source={{
-        uri: pet.image_url
+        uri: pet?.image_url || ""
       }} style={styles.petImage} />
         <View style={styles.petNameFav}>
-          <Text style={styles.petName}>{pet.name}</Text>
-          {pet.is_favorite && <Image source={require("./icone-de-coeur-bleu-1.png")} style={styles.favIcon} />}
+          <Text style={styles.petName}>{pet?.name || ""}</Text>
+          {pet?.is_favorite && <Image source={require("./icone-de-coeur-bleu-1.png")} style={styles.favIcon} />}
         </View>
         <View style={styles.petDetails}>
           <Text style={styles.label}>Pet Name:</Text>
-          <Text style={styles.detail}>{pet.name}</Text>
+          <Text style={styles.detail}>{pet?.name || ""}</Text>
         </View>
         <View style={styles.petDetails}>
           <Text style={styles.label}>Pet Type:</Text>
-          <Text style={styles.detail}>{pet.type}</Text>
+          <Text style={styles.detail}>{pet?.type || ""}</Text>
         </View>
         <View style={styles.petDetails}>
           <Text style={styles.label}>Date of Adoption:</Text>
-          <Text style={styles.detail}>{pet.date_adopted}</Text>
+          <Text style={styles.detail}>{pet?.date_adopted || ""}</Text>
         </View>
         <View style={styles.petDetails}>
           <Text style={styles.label}>Description:</Text>
-          <Text style={styles.detail}>{pet.description}</Text>
+          <Text style={styles.detail}>{pet?.description || ""}</Text>
         </View>
         <View style={styles.petDetails}>
           <Text style={styles.label}>Special Attributes:</Text>
-          <Text style={styles.detail}>{pet.attributes}</Text>
+          <Text style={styles.detail}>{pet?.attributes || ""}</Text>
         </View>
       </ScrollView>
     </View>;
