@@ -13,7 +13,7 @@ const PetGalleryScreen = () => {
   useEffect(() => {
     dispatch(api_v1_pet_list());
   }, []);
-  const petsSelector = useSelector(state => state?.Pets?.entities);
+  const petsSelector = useSelector(state => state.Pets.entities);
   useEffect(() => {
     if (petsSelector) {
       setPets(petsSelector);
