@@ -1,9 +1,20 @@
+import { rest_auth_user_retrieve } from "../../store/daveAPI/userDetails.slice.js";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import React from "react";
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from "react-native";
+import { useSelector } from "react-redux";
 
 const UserProfile = ({
   navigation
 }) => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(rest_auth_user_retrieve({
+      id: 1
+    }));
+  }, []);
+  const userDetails = useSelector(state => state.UserDetails.entities);
   return <View style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.navigate("ScreenAI4")}>
@@ -13,9 +24,9 @@ const UserProfile = ({
       </View>
       <View style={styles.body}>
         <Text style={styles.label}>Username:</Text>
-        <TextInput style={styles.input} />
+        <TextInput style={styles.input} value={userDetails.username} />
         <Text style={styles.label}>Password:</Text>
-        <TextInput style={styles.input} secureTextEntry />
+        <TextInput style={styles.input} secureTextEntry value={userDetails.password} />
         <TouchableOpacity style={styles.saveButton}>
           <Text style={styles.saveButtonText}>Save</Text>
         </TouchableOpacity>
