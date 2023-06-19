@@ -1,62 +1,34 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import React from "react";
 import { SafeAreaView, Pressable } from "react-native";
 import { useState } from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from "react-native";
-const dummyData = [{
-  id: 1,
-  name: "Pet 1",
-  type: "Dog",
-  image_url: "./pet1.png",
-  attributes: ["Friendly", "Playful"],
-  is_favorite: false,
-  description: "A cute and friendly dog.",
-  date_adopted: "2021-01-01",
-  user: "User1"
-}, {
-  id: 2,
-  name: "Pet 2",
-  type: "Cat",
-  image_url: "./pet2.png",
-  attributes: ["Independent", "Calm"],
-  is_favorite: true,
-  description: "A calm and independent cat.",
-  date_adopted: "2021-02-01",
-  user: "User2"
-}, {
-  id: 3,
-  name: "Pet 3",
-  type: "Dog",
-  image_url: "./pet3.png",
-  attributes: ["Energetic", "Loyal"],
-  is_favorite: false,
-  description: "An energetic and loyal dog.",
-  date_adopted: "2021-03-01",
-  user: "User3"
-}, {
-  id: 4,
-  name: "Pet 4",
-  type: "Cat",
-  image_url: "./pet4.png",
-  attributes: ["Affectionate", "Quiet"],
-  is_favorite: true,
-  description: "An affectionate and quiet cat.",
-  date_adopted: "2021-04-01",
-  user: "User4"
-}];
+import { api_v1_pet_list } from "../../store/daveAPI/pets.slice.js";
 
 const PetGalleryScreen = () => {
-  const [pets, setPets] = useState(dummyData);
+  const [pets, setPets] = useState([]);
   const [filter, setFilter] = useState("Explore");
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(api_v1_pet_list());
+  }, []);
+  const petsSelector = useSelector(state => state?.Pets?.entities);
+  useEffect(() => {
+    if (petsSelector) {
+      setPets(petsSelector);
+    }
+  }, [petsSelector]);
 
   const handleFilter = filterType => {
     setFilter(filterType);
 
     if (filterType === "Explore") {
-      setPets(dummyData);
+      setPets(petsSelector);
     } else if (filterType === "My Pets") {
-      setPets(dummyData.filter(pet => !pet.is_favorite));
+      setPets(petsSelector.filter(pet => !pet.is_favorite));
     } else if (filterType === "My Favs") {
-      setPets(dummyData.filter(pet => pet.is_favorite));
+      setPets(petsSelector.filter(pet => pet.is_favorite));
     }
   };
 
