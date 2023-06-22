@@ -15,7 +15,7 @@ const PetGalleryScreen = () => {
   }, []);
   const petsSelector = useSelector(state => state.Pets.entities);
   useEffect(() => {
-    if (petsSelector) {
+    if (petsSelector && pets.length !== petsSelector.length) {
       setPets(petsSelector);
     }
   }, [petsSelector]);
